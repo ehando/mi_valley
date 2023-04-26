@@ -1,0 +1,14 @@
+name: mi_valley
+title: mi_valley
+username:
+account: ehando
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8959255
+bundleId: 7138802
+url: https://ehando.shinyapps.io/mi_valley/
+when: 1682521259.27521
+lastSyncTime: 1682521259.27526
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData
