@@ -17,8 +17,7 @@ df <- read_excel("data/master_meta.xlsx") %>%
          PO4, NO3, NH3, BOD, TSS, Discharge, Chloride, Arsenic, Mercury, Lead,
                 Wetland, Forest, Grass, Agricultural, Imper_Catch) %>%
   # Duck and Rock River Watersheds are just NA values so filter them out
-  filter(Watershed != 'Duck') %>%
-  filter(Watershed != 'Rock River') %>%
+  filter(!Watershed %in% c("Duck", "Rock River")) %>%
   #replace NA values with the column mean
   mutate(across(where(is.numeric), ~ifelse(is.na(.), mean(., na.rm = TRUE), .)))
 
@@ -36,7 +35,7 @@ print(cor_matrix)
 
 # Define UI
 ui <- fluidPage(
-  titlePanel("Water Quality Analysis"),
+  titlePanel("Mississippi Valley Project"),
   sidebarLayout(
     sidebarPanel(
       # Select plot type
@@ -44,7 +43,10 @@ ui <- fluidPage(
                   choices = c("Arsenic by Site", "Lead by Site",
                               "Scatter Plot with Phosphate and Catchment Levels",
                               "Phosphate by Site"),
-                  selected = "Scatter Plot with Phosphate and Catchment Levels")),
+                  selected = "Scatter Plot with Phosphate and Catchment Levels"),
+      # Text output
+      textOutput("text")
+    ),
     mainPanel(
       # Place output plots here
       plotOutput("plot", width = '800px', height = '650px')
@@ -82,6 +84,28 @@ server <- function(input, output) {
         geom_text(color = "white", size = 3.8) +
         labs(title = "Phosphate by Site") +
         coord_flip()
+    }
+  })
+  output$text <- renderText({
+    plotType <- selected_plot()
+    if (plotType == "Arsenic by Site") {
+      "This chart shows the Arsenic levels at different sites in the area.
+      The colors show which watershed the site belongs to. The sites in the Rock 
+      Island watershed have much higher Arsenic values than the others, and is 
+      something to explore in further detail."
+    } else if (plotType == "Lead by Site") {
+      "This chart shows the Lead levels at different sites in the area.
+      The colors show which watershed the site belongs to. The sites in the Rock 
+      Island watershed have much higher Lead values than the others, and is 
+      something to explore in further detail."
+    } else if (plotType == "Scatter Plot with Phosphate and Catchment Levels") {
+      "This scatter plot shows the correlation between Phosphate and Catchment 
+      Levels. There is a strong correlation between the two as the line moves up 
+      and to the right."
+    } else if (plotType == "Phosphate by Site") {
+      "This lollipop chart shows the Phosphate values at different sites in the 
+      area. The lollipops are colorcoded by Watershed to see patterns. The 
+      Phosphate values at Rock Island sites stand out compared to the rest."
     }
   })
 }

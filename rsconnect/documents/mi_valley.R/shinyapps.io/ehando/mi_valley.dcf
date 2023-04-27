@@ -5,10 +5,10 @@ account: ehando
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 8959255
-bundleId: 7138802
+bundleId: 7143656
 url: https://ehando.shinyapps.io/mi_valley/
-when: 1682521259.27521
-lastSyncTime: 1682521259.27526
+when: 1682606102.59181
+lastSyncTime: 1682606102.59183
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: .RData
+ignoredFiles: files/.gitattributes|files/.RData|files/.Rhistory|README.md
