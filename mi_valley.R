@@ -68,21 +68,83 @@ server <- function(input, output) {
     if (plotType == "Arsenic by Site") {
       ggplot(df, aes(x = Site, y = Arsenic, fill = Watershed)) +
         geom_col() +
-        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+        scale_fill_viridis(discrete = TRUE) +
+        theme(axis.text.x =element_text(size=11, angle=90, vjust= 0.5, hjust=1),
+              axis.text.y = element_text(size = 11),
+              axis.title = element_text(size = 16),
+              legend.title = element_text(size = 14),
+              legend.text = element_text(size = 12),
+              plot.title = element_text(size = 18, face = "bold"),
+              plot.subtitle = element_text(size = 16, face = "italic"),
+              plot.caption = element_text(size = 12),
+              panel.grid.minor = element_blank(),
+              panel.border = element_blank(),
+              panel.background = element_blank()) +
+        labs(title = "Arsenic Levels by Site and Watershed",
+             x = "Site",
+             y = "Arsenic Levels",
+             fill = "Watershed")
+      
     } else if (plotType == "Lead by Site") {
       ggplot(df, aes(x = Site, y = Lead, fill = Watershed)) +
         geom_col() +
-        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+        scale_fill_viridis(discrete = TRUE) +
+        theme_minimal() +
+        theme(axis.text.x =element_text(size=11, angle=90, vjust= 0.5, hjust=1),
+              axis.text.y = element_text(size = 11),
+              axis.title = element_text(size = 16),
+              legend.title = element_text(size = 14),
+              legend.text = element_text(size = 12),
+              plot.title = element_text(size = 18, face = "bold"),
+              plot.subtitle = element_text(size = 16, face = "italic"),
+              plot.caption = element_text(size = 12),
+              panel.grid.minor = element_blank(),
+              panel.border = element_blank(),
+              panel.background = element_blank()) +
+        labs(title = "Lead Levels by Site and Watershed",
+             x = "Site",
+             y = "Lead Levels",
+             fill = "Watershed")
+      
     } else if (plotType == "Scatter Plot with Phosphate and Catchment Levels") {
       ggplot(df, aes(x = Imper_Catch, y = PO4)) +
+        scale_fill_viridis(discrete = TRUE) +
         geom_point(aes(col = Watershed)) +
-        geom_smooth(method = "loess", se = FALSE)
+        geom_smooth(method = "loess", se = FALSE) +
+        theme(axis.text = element_text(size=11),
+              axis.title = element_text(size = 16),
+              legend.title = element_text(size = 14),
+              legend.text = element_text(size = 12),
+              plot.title = element_text(size = 18, face = "bold"),
+              plot.subtitle = element_text(size = 16, face = "italic"),
+              plot.caption = element_text(size = 12),
+              panel.grid.minor = element_blank(),
+              panel.border = element_blank(),
+              panel.background = element_blank()) +
+        labs(title = "Scatter Plot with Phosphate and Catchment Levels",
+             x = "Catchment Levels",
+             y = "Phosphate Levels")
+        
     } else if (plotType == "Phosphate by Site") {
       ggplot(df, aes(x = Site, y = PO4, label = sprintf("%.2f", PO4), color = Watershed)) +
+        scale_fill_viridis(discrete = TRUE) +
         geom_point(stat = 'identity', size = 9) +
         geom_segment(aes(y = 0, x = Site, yend = PO4, xend = Site)) +
         geom_text(color = "white", size = 3.8) +
-        labs(title = "Phosphate by Site") +
+        theme(axis.text = element_text(size=11),
+              axis.title = element_text(size = 16),
+              legend.title = element_text(size = 14),
+              legend.text = element_text(size = 12),
+              plot.title = element_text(size = 18, face = "bold"),
+              plot.subtitle = element_text(size = 16, face = "italic"),
+              plot.caption = element_text(size = 12),
+              panel.grid.minor = element_blank(),
+              panel.border = element_blank(),
+              panel.background = element_blank()) +
+        labs(title = "Phosphate Levels by Site and Watershed",
+             x = "Site",
+             y = "Phosphate Levels (mg/L)",
+             fill = "Watershed") +
         coord_flip()
     }
   })
